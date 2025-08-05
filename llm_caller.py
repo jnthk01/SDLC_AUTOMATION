@@ -1,19 +1,20 @@
 import os
-from google import genai
 from dotenv import load_dotenv
+from langchain_community.chat_models import ChatGroq
+from langchain_core.messages import HumanMessage
 
 load_dotenv()
 
-client = genai.Client(api_key=os.getenv("GOOGLE_API_KEY"))
+groq_api_key = os.getenv("GROQ_API_KEY")
 
-def gemini_flash1_5(query):
-    response = client.models.generate_content(
-        model="gemini-2.5-flash", contents="Explain how AI works in a few words"
+def llama3_70b(query: str) -> str:
+    """
+    Calls Groq's LLaMA3-70B model and returns the text output.
+    """
+    model = ChatGroq(
+        model_name="llama3-70b-8192",
+        groq_api_key=groq_api_key,
+        temperature=0.7,
     )
-    return response.text
-
-def gemini_1_5_pro(query):
-    response = client.models.generate_content(
-        model="gemini-1.5-pro", contents="Explain how AI works in a few words"
-    )
-    return response.text
+    response = model.invoke([HumanMessage(content=query)])
+    return response.content

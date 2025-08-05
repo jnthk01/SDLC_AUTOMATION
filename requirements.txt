@@ -1,2 +1,9 @@
 python-dotenv
-google-generativeai
+langchain-google-genai
+fastmcp
+asyncio
+langchain-mcp-adapters
+langgraph
+langchain
+langchain-community
+langchain-groq
